@@ -3,41 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <title>DrugDealerX Stats</title>
+    <title>DrugDealerX - Tablet UI</title>
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <span class="title">DRUG NETWORK</span>
-            <div class="close-btn" onclick="closeUI()">×</div>
-        </div>
+    <div class="tablet-frame">
+        <div class="tablet-screen">
+            <!-- Status Bar -->
+            <div class="status-bar">
+                <div class="time" id="current-time">12:00</div>
+                <div class="status-icons">
+                    <div class="icon">📶</div>
+                    <div class="icon">5G</div>
+                    <div class="icon">100% 🔋</div>
+                </div>
+            </div>
 
-        <div class="stats-grid">
-            <div class="stat-card">
-                <div class="stat-value" id="rep-value">0</div>
-                <div class="stat-label">Reputation</div>
+            <!-- Sidebar Navigation -->
+            <div class="sidebar">
+                <div class="app-icon">
+                    <div class="inner-icon">💊</div>
+                </div>
+                <nav>
+                    <div class="nav-item active" data-tab="dashboard">
+                        <span class="nav-symbol">⋉</span>
+                    </div>
+                    <div class="nav-item" data-tab="leaderboard">
+                        <span class="nav-symbol">⌬</span>
+                    </div>
+                </nav>
+                <div class="close-trigger" onclick="closeUI()">
+                    <span>✕</span>
+                </div>
             </div>
-            <div class="stat-card">
-                <div class="stat-value" id="sold-value">0</div>
-                <div class="stat-label">Total Sold</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-value" id="money-value">$0</div>
-                <div class="stat-label">Total Earned</div>
-            </div>
-        </div>
 
-        <div class="leaderboard-section">
-            <div class="section-title">TOP TRAFFICKERS</div>
-            <div class="leaderboard-list" id="leaderboard-list">
-                <!-- Dynamic Content -->
-            </div>
-        </div>
+            <!-- Main Content Area -->
+            <main class="content">
+                <header>
+                    <h1>Network Hub</h1>
+                    <p>Encrypted connection established...</p>
+                </header>
 
-        <div class="footer">
-            Street credibility determines your market influence.
+                <!-- Dashboard Tab -->
+                <div id="dashboard" class="tab-content active">
+                    <div class="stats-container">
+                        <div class="card primary">
+                            <div class="card-label">Total Earnings</div>
+                            <div class="card-value" id="money-value">$0</div>
+                            <div class="card-chart">
+                                <div class="bar" style="height: 40%"></div>
+                                <div class="bar" style="height: 70%"></div>
+                                <div class="bar" style="height: 55%"></div>
+                                <div class="bar" style="height: 90%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="card-row">
+                            <div class="card secondary">
+                                <div class="card-label">Reputation</div>
+                                <div class="card-value" id="rep-value">0</div>
+                            </div>
+                            <div class="card secondary">
+                                <div class="card-label">Units Sold</div>
+                                <div class="card-value" id="sold-value">0</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="recent-activity">
+                        <h3>System Status</h3>
+                        <div class="status-item">
+                            <div class="status-dot online"></div>
+                            <span>Market Nodes Active</span>
+                        </div>
+                        <div class="status-item">
+                            <div class="status-dot online"></div>
+                            <span>Encryption Layer: AES-256</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leaderboard Tab (Hidden by default) -->
+                <div id="leaderboard" class="tab-content">
+                    <div class="leaderboard-header">
+                        <span>Rank</span>
+                        <span>Identifier</span>
+                        <span>Value</span>
+                    </div>
+                    <div class="leaderboard-list" id="leaderboard-list">
+                        <!-- Dynamic Content -->
+                    </div>
+                </div>
+            </main>
+
+            <!-- Home Bar (Apple Style) -->
+            <div class="home-bar"></div>
         </div>
     </div>
     <script src="script.js"></script>
