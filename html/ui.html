@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <title>DrugDealerX Stats</title>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <span class="title">DRUG NETWORK</span>
+            <div class="close-btn" onclick="closeUI()">×</div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="rep-value">0</div>
+                <div class="stat-label">Reputation</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="sold-value">0</div>
+                <div class="stat-label">Total Sold</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="money-value">$0</div>
+                <div class="stat-label">Total Earned</div>
+            </div>
+        </div>
+
+        <div class="leaderboard-section">
+            <div class="section-title">TOP TRAFFICKERS</div>
+            <div class="leaderboard-list" id="leaderboard-list">
+                <!-- Dynamic Content -->
+            </div>
+        </div>
+
+        <div class="footer">
+            Street credibility determines your market influence.
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
