@@ -1,22 +1,41 @@
-// Web Preview Mode Helper
 const isWebPreview = !window.invokeNative;
 
 document.addEventListener('DOMContentLoaded', () => {
+    setupClock();
+    
     if (isWebPreview) {
         document.body.classList.add('visible');
-        setupClock();
-        // Mock data for browser testing
         updateUI({
-            reputation: 1250,
-            totalSold: 45,
-            totalValue: 125400,
+            reputation: 2450,
+            totalSold: 182,
+            totalValue: 842500,
             leaderboard: [
-                { citizenid: "ABC12345", total_value: 500000 },
-                { citizenid: "XYZ98765", total_value: 250000 },
-                { citizenid: "DEV00001", total_value: 100000 }
+                { citizenid: "GHOST_99", total_value: 1200000 },
+                { citizenid: "SILENCE_X", total_value: 950000 },
+                { citizenid: "VOID_WALKER", total_value: 842500 },
+                { citizenid: "NEON_VIPER", total_value: 420000 },
+                { citizenid: "REAPER_01", total_value: 150000 }
             ]
         });
     }
+});
+
+// Tab Navigation
+const dockItems = document.querySelectorAll('.dock-item[data-tab]');
+const pages = document.querySelectorAll('.app-page');
+
+dockItems.forEach(item => {
+    item.addEventListener('click', () => {
+        const target = item.getAttribute('data-tab');
+        
+        // Update Dock
+        dockItems.forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+
+        // Update Pages
+        pages.forEach(p => p.classList.remove('active'));
+        document.getElementById(target).classList.add('active');
+    });
 });
 
 function setupClock() {
@@ -30,28 +49,11 @@ function setupClock() {
     update();
 }
 
-// Tab Switching Logic
-const navItems = document.querySelectorAll('.nav-item');
-const tabs = document.querySelectorAll('.tab-content');
-
-navItems.forEach(item => {
-    item.addEventListener('click', () => {
-        const target = item.getAttribute('data-tab');
-        
-        navItems.forEach(i => i.classList.remove('active'));
-        tabs.forEach(t => t.classList.remove('active'));
-        
-        item.classList.add('active');
-        document.getElementById(target).classList.add('active');
-    });
-});
-
 window.addEventListener('message', function(event) {
     const data = event.data;
 
     if (data.action === 'open') {
         document.body.classList.add('visible');
-        setupClock();
         updateUI(data.data);
     }
 
@@ -61,10 +63,14 @@ window.addEventListener('message', function(event) {
 });
 
 function updateUI(data) {
-    // Update Personal Stats
-    document.getElementById('rep-value').innerText = data.reputation.toLocaleString();
-    document.getElementById('sold-value').innerText = data.totalSold.toLocaleString();
-    document.getElementById('money-value').innerText = '$' + data.totalValue.toLocaleString();
+    // Animate Numbers
+    animateValue("money-value", 0, data.totalValue, 1500);
+    animateValue("rep-value", 0, data.reputation, 1000);
+    animateValue("sold-value", 0, data.totalSold, 1000);
+
+    // Update Progress Bars
+    document.getElementById('rep-fill').style.width = Math.min((data.reputation / 5000) * 100, 100) + '%';
+    document.getElementById('sold-fill').style.width = Math.min((data.totalSold / 1000) * 100, 100) + '%';
 
     // Update Leaderboard
     const list = document.getElementById('leaderboard-list');
@@ -72,18 +78,33 @@ function updateUI(data) {
 
     if (data.leaderboard && data.leaderboard.length > 0) {
         data.leaderboard.forEach((entry, index) => {
-            const item = document.createElement('div');
-            item.className = 'leader-item';
-            item.innerHTML = `
-                <div class="leader-rank">#${index + 1}</div>
-                <div class="leader-name">${entry.citizenid}</div>
-                <div class="leader-value">$${entry.total_value.toLocaleString()}</div>
+            const row = document.createElement('div');
+            row.className = 'leader-row';
+            row.innerHTML = `
+                <div class="rank-num">#${index + 1}</div>
+                <div class="id-text">${entry.citizenid}</div>
+                <div class="val-text">$${entry.total_value.toLocaleString()}</div>
             `;
-            list.appendChild(item);
+            list.appendChild(row);
         });
-    } else {
-        list.innerHTML = '<div style="text-align:center; color:rgba(255,255,255,0.2); margin-top:20px;">No network data available</div>';
     }
+}
+
+function animateValue(id, start, end, duration) {
+    const obj = document.getElementById(id);
+    if (!obj) return;
+    
+    let startTimestamp = null;
+    const step = (timestamp) => {
+        if (!startTimestamp) startTimestamp = timestamp;
+        const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+        const current = Math.floor(progress * (end - start) + start);
+        obj.innerHTML = current.toLocaleString();
+        if (progress < 1) {
+            window.requestAnimationFrame(step);
+        }
+    };
+    window.requestAnimationFrame(step);
 }
 
 function closeUI() {
@@ -93,6 +114,7 @@ function closeUI() {
     }
     fetch('https://' + GetParentResourceName() + '/close', {
         method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({})
     });
 }

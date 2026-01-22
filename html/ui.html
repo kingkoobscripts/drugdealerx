@@ -5,100 +5,128 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <title>DrugDealerX - Tablet UI</title>
+    <title>DrugDealerX OS</title>
 </head>
 <body>
-    <div class="tablet-frame">
-        <div class="tablet-screen">
-            <!-- Status Bar -->
+    <div class="ipad-container">
+        <!-- Bezel and Camera -->
+        <div class="ipad-bezel">
+            <div class="camera-dot"></div>
+        </div>
+
+        <div class="ipad-screen">
+            <!-- Top Status Bar -->
             <div class="status-bar">
-                <div class="time" id="current-time">12:00</div>
-                <div class="status-icons">
-                    <div class="icon">📶</div>
-                    <div class="icon">5G</div>
-                    <div class="icon">100% 🔋</div>
+                <div class="left">
+                    <span id="current-time">09:41</span>
+                </div>
+                <div class="right">
+                    <span class="signal">📶</span>
+                    <span class="wifi">℥</span>
+                    <div class="battery">
+                        <div class="battery-level"></div>
+                    </div>
                 </div>
             </div>
 
-            <!-- Sidebar Navigation -->
-            <div class="sidebar">
-                <div class="app-icon">
-                    <div class="inner-icon">💊</div>
+            <!-- Side Dock Navigation -->
+            <div class="side-dock">
+                <div class="dock-item active" data-tab="home" title="Dashboard">
+                    <div class="icon-circle home-gradient">🏠</div>
                 </div>
-                <nav>
-                    <div class="nav-item active" data-tab="dashboard">
-                        <span class="nav-symbol">⋉</span>
-                    </div>
-                    <div class="nav-item" data-tab="leaderboard">
-                        <span class="nav-symbol">⌬</span>
-                    </div>
-                </nav>
-                <div class="close-trigger" onclick="closeUI()">
-                    <span>✕</span>
+                <div class="dock-item" data-tab="market" title="Leaderboard">
+                    <div class="icon-circle market-gradient">📈</div>
+                </div>
+                <div class="dock-spacer"></div>
+                <div class="dock-item logout" onclick="closeUI()">
+                    <div class="icon-circle logout-gradient">✕</div>
                 </div>
             </div>
 
-            <!-- Main Content Area -->
-            <main class="content">
-                <header>
-                    <h1>Network Hub</h1>
-                    <p>Encrypted connection established...</p>
-                </header>
+            <!-- Main Dynamic Content -->
+            <div class="main-canvas">
+                
+                <!-- HOME TAB -->
+                <section id="home" class="app-page active">
+                    <header class="page-header">
+                        <div class="header-text">
+                            <p class="greeting">Welcome back, Operator</p>
+                            <h1>Network Dashboard</h1>
+                        </div>
+                        <div class="connection-pill">
+                            <div class="pulse"></div>
+                            ENCRYPTED
+                        </div>
+                    </header>
 
-                <!-- Dashboard Tab -->
-                <div id="dashboard" class="tab-content active">
-                    <div class="stats-container">
-                        <div class="card primary">
-                            <div class="card-label">Total Earnings</div>
-                            <div class="card-value" id="money-value">$0</div>
-                            <div class="card-chart">
-                                <div class="bar" style="height: 40%"></div>
-                                <div class="bar" style="height: 70%"></div>
-                                <div class="bar" style="height: 55%"></div>
-                                <div class="bar" style="height: 90%"></div>
+                    <div class="grid-layout">
+                        <!-- Large Feature Card -->
+                        <div class="glass-card main-stats">
+                            <div class="card-title">Net Revenue</div>
+                            <div class="value-display">
+                                <span class="currency">$</span>
+                                <span id="money-value">0</span>
+                            </div>
+                            <div class="visualizer">
+                                <div class="wave"></div>
+                                <div class="wave"></div>
                             </div>
                         </div>
-                        
-                        <div class="card-row">
-                            <div class="card secondary">
-                                <div class="card-label">Reputation</div>
-                                <div class="card-value" id="rep-value">0</div>
+
+                        <!-- Mini Stats -->
+                        <div class="mini-grid">
+                            <div class="glass-card mini">
+                                <div class="mini-label">Reputation</div>
+                                <div class="mini-value" id="rep-value">0</div>
+                                <div class="progress-track"><div class="progress-fill" id="rep-fill" style="width: 45%"></div></div>
                             </div>
-                            <div class="card secondary">
-                                <div class="card-label">Units Sold</div>
-                                <div class="card-value" id="sold-value">0</div>
+                            <div class="glass-card mini">
+                                <div class="mini-label">Units Distributed</div>
+                                <div class="mini-value" id="sold-value">0</div>
+                                <div class="progress-track"><div class="progress-fill" id="sold-fill" style="width: 60%"></div></div>
+                            </div>
+                        </div>
+
+                        <!-- System Status -->
+                        <div class="glass-card system-logs">
+                            <div class="card-title">System Integrity</div>
+                            <div class="log-entry">
+                                <span class="log-time">SECURE</span>
+                                <span class="log-msg">Proxy Tunnel Active</span>
+                            </div>
+                            <div class="log-entry">
+                                <span class="log-time">ACTIVE</span>
+                                <span class="log-msg">Market Listener v4.2</span>
                             </div>
                         </div>
                     </div>
+                </section>
 
-                    <div class="recent-activity">
-                        <h3>System Status</h3>
-                        <div class="status-item">
-                            <div class="status-dot online"></div>
-                            <span>Market Nodes Active</span>
+                <!-- LEADERBOARD TAB -->
+                <section id="market" class="app-page">
+                    <header class="page-header">
+                        <div class="header-text">
+                            <p class="greeting">Global Rankings</p>
+                            <h1>Shadow Market</h1>
                         </div>
-                        <div class="status-item">
-                            <div class="status-dot online"></div>
-                            <span>Encryption Layer: AES-256</span>
+                    </header>
+
+                    <div class="leaderboard-container glass-card">
+                        <div class="list-header">
+                            <span>RANK</span>
+                            <span>IDENTIFIER</span>
+                            <span class="align-right">TOTAL REVENUE</span>
+                        </div>
+                        <div class="scroll-list" id="leaderboard-list">
+                            <!-- Dynamic Content -->
                         </div>
                     </div>
-                </div>
+                </section>
 
-                <!-- Leaderboard Tab (Hidden by default) -->
-                <div id="leaderboard" class="tab-content">
-                    <div class="leaderboard-header">
-                        <span>Rank</span>
-                        <span>Identifier</span>
-                        <span>Value</span>
-                    </div>
-                    <div class="leaderboard-list" id="leaderboard-list">
-                        <!-- Dynamic Content -->
-                    </div>
-                </div>
-            </main>
+            </div>
 
-            <!-- Home Bar (Apple Style) -->
-            <div class="home-bar"></div>
+            <!-- Home Indicator -->
+            <div class="home-indicator"></div>
         </div>
     </div>
     <script src="script.js"></script>
